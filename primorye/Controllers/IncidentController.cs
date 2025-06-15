@@ -42,7 +42,7 @@ namespace primorye.Controllers
                     price = s.Price,
                     progress = s.Progress,
                     public_opinion = s.PublicOpinion
-                })
+                }).ToList()
             });
         }
     }

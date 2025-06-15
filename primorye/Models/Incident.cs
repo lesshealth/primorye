@@ -6,7 +6,7 @@
 
         public string Text { get; set; } = string.Empty;
 
-        public int Difficulty { get; set; }
+        public string Difficulty { get; set; } = string.Empty;
 
         public int CityId { get; set; }
 

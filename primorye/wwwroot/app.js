@@ -42,6 +42,22 @@ async function selectCity() {
     }
 }
 
+async function loadIncident() {
+    const res = await fetch(`${api}/incident/random-by-city?cityId=${currentCityId}`);
+    const data = await res.json();
+
+    document.getElementById("incidentText").textContent = data.text;
+
+    const container = document.getElementById("solutions");
+    container.innerHTML = "";
+    data.solutions.forEach(s => {
+        const btn = document.createElement("button");
+        btn.textContent = s.text + ` (${s.price})`;
+        btn.onclick = () => choose(s.text, s.price, s.public_opinion, s.progress);
+        container.appendChild(btn);
+    });
+}
+
 async function startGame() {
     currentTeamId = parseInt(document.getElementById("teamId").value);
     const res = await fetch(`${api}/game/start?teamId=${currentTeamId}&cityId=${currentCityId}`, { method: "POST" });
@@ -49,6 +65,7 @@ async function startGame() {
     renderState(data);
     alert("Игра началась!");
     await loadNextQuestion();
+    await loadIncident();
 }
 
 async function loadNextQuestion() {
@@ -104,6 +121,8 @@ function renderState(state) {
     document.getElementById("socialPoints").textContent = state.socialPoints;
     document.getElementById("progress").textContent = state.progress;
     document.getElementById("goal").textContent = state.currentGoal;
+    document.getElementById("incident").textContent = state.currentIncidentText || "Инцидент не выбран";
+
 }
 
 window.onload = () => {

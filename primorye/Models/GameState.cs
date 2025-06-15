@@ -15,6 +15,10 @@
         public int QuestionsAnsweredInRound { get; set; } = 0;
 
         public HashSet<int> AskedQuestionIds { get; set; } = new();
+        public int? CurrentIncidentId { get; set; }
+        public string CurrentIncidentText { get; set; } = "";
+        public List<SolutionToTheCase> Solutions { get; set; } = new();
+
     }
 
 }

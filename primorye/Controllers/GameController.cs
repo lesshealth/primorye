@@ -13,10 +13,21 @@ namespace primorye.Controllers
         private static readonly Dictionary<int, GameState> _games = new();
 
         [HttpPost("start")]
-        public IActionResult StartGame([FromQuery] int teamId, [FromQuery] int cityId)
+        public async Task<IActionResult> StartGame(
+            [FromQuery] int teamId,
+            [FromQuery] int cityId,
+            [FromServices] ApplicationDbContext db)
         {
             if (_games.ContainsKey(teamId))
                 return BadRequest(new { message = "Игра уже запущена" });
+
+            var incident = await db.Incidents
+                .Where(i => i.CityId == cityId)
+                .OrderBy(i => Guid.NewGuid())
+                .FirstOrDefaultAsync();
+
+            if (incident == null)
+                return NotFound(new { message = "Нет инцидентов для города" });
 
             var game = new GameState
             {
@@ -30,7 +41,9 @@ namespace primorye.Controllers
                 CurrentGoal = $"Вы начали игру в городе ID={cityId}. Ответьте на вопрос!",
                 CurrentRound = 1,
                 QuestionsAnsweredInRound = 0,
-                AskedQuestionIds = new HashSet<int>()
+                AskedQuestionIds = new HashSet<int>(),
+                CurrentIncidentId = incident.Id,
+                CurrentIncidentText = incident.Text
             };
 
             _games[teamId] = game;

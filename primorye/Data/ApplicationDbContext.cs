@@ -58,6 +58,7 @@ namespace primorye.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Difficulty).HasColumnName("difficulty");
+                entity.Property(e => e.Text).HasColumnName("text");
                 entity.Property(e => e.CityId).HasColumnName("id_city");
             });
 
