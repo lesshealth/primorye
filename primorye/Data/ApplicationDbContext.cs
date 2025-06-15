@@ -72,6 +72,11 @@ namespace primorye.Data
                 entity.Property(e => e.PublicOpinion).HasColumnName("public_opinion");
                 entity.Property(e => e.Progress).HasColumnName("progress");
                 entity.Property(e => e.IdIncidents).HasColumnName("id_incidents");
+
+                entity.HasOne(e => e.Incident)
+                    .WithMany(i => i.Solutions)
+                    .HasForeignKey(e => e.IdIncidents)
+                    .HasPrincipalKey(i => i.Id);
             });
 
             modelBuilder.Entity<Question>(entity =>
