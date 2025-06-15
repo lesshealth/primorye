@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Приморье: игра</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Управляй Приморьем</h1>
+
+        <section>
+            <h2>1. Вход</h2>
+            <input id="login" placeholder="Логин" />
+            <input id="password" type="password" placeholder="Пароль" />
+            <button onclick="login()">Войти</button>
+            <div id="loginResult"></div>
+        </section>
+
+        <section>
+            <h3>Выберите город</h3>
+            <select id="citySelect"></select>
+            <button onclick="selectCity()">Выбрать</button>
+        </section>
+
+        <section>
+            <h2>2. Запуск игры</h2>
+            <input id="teamId" type="number" placeholder="ID команды" />
+            <button id="startButton" onclick="startGame()" disabled>Старт</button>
+        </section>
+
+        <section>
+            <h2>3. Получить вопрос</h2>
+            <button onclick="loadQuestion()">Получить вопрос</button>
+            <div id="questionBlock">
+                <p id="questionText"></p>
+                <div id="variants"></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Состояние игры</h2>
+            <button onclick="getState()">Обновить состояние</button>
+            <div id="statusBlock">
+                <p><strong>Финансы:</strong> <span id="finance"></span></p>
+                <p><strong>Социальные очки:</strong> <span id="socialPoints"></span></p>
+                <p><strong>Прогресс:</strong> <span id="progress"></span></p>
+                <p><strong>Цель:</strong> <span id="goal"></span></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Решение проблемы</h2>
+            <button onclick="choose('Обращение в СМИ', 20, 5, 10)">Обращение в СМИ (20)</button>
+            <button onclick="choose('Поиск подрядчиков', 160, 15, 20)">Поиск подрядчиков (160)</button>
+            <button onclick="choose('Закупка асфальта', 300, 30, 40)">Закупка асфальта (300)</button>
+        </section>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
